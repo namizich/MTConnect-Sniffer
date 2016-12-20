@@ -1,4 +1,7 @@
-![MTConnect Sniffer](mtc-sniffer-logo-50px.png)<br><br>
+![MTConnect Sniffer](mtc-sniffer-logo-50px.png)
+
+[![Hex.pm](https://img.shields.io/hexpm/l/plug.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
+
 .NET library for finding MTConnect® Devices on a network.
 
 # How It Works

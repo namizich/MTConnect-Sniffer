@@ -6,9 +6,9 @@
 
 # How It Works
 - The local IP Address is read for each Network Interface
-- A list of IP Addresses is found for local subnet
+- A list of IP Addresses is found for the local subnet
 - A ping request is sent to each IP Address in the subnet
-- Upon successfully request, each port in the PortRange property is tested to see if open
+- Upon each successful request, each port in the PortRange property is tested to see if open
 - If the port is open then an MTConnect Probe request is sent
 - If the MTConnect Probe request is successful then a MTConnectDevice object is created and included in the DeviceFound event
 

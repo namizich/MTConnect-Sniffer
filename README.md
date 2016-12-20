@@ -11,7 +11,7 @@
 
 # Example
 
-```#c
+```c#
 void Start()
 {
   // Create new MTConnect Sniffer

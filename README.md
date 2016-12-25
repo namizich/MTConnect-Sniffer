@@ -1,5 +1,7 @@
 ![MTConnect Sniffer](mtc-sniffer-logo-50px.png)
-<br><br><br>
+
+[![Travis branch](https://img.shields.io/travis/TrakHound/MTConnect-Sniffer.svg?style=flat-square)](https://travis-ci.org/TrakHound/MTConnect-Sniffer) [![NuGet](https://img.shields.io/nuget/v/MTConnect-Sniffer.svg?style=flat-square)](https://www.nuget.org/packages/MTConnect-Sniffer/)
+
 .NET library for finding MTConnect® Devices on a network.
 
 # How It Works

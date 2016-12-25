@@ -27,9 +27,14 @@ namespace TrakHound.MTConnectSniffer
         public int Timeout { get; set; }
 
         /// <summary>
-        /// The range of ports to scan for MTConnect Agents
+        /// The range of ports to scan for MTConnect Agents at
         /// </summary>
         public int[] PortRange { get; set; }
+
+        /// <summary>
+        /// The range of IP Addresses to scan for MTConnect Agents at
+        /// </summary>
+        public IPAddress[] AddressRange { get; set; }
 
         /// <summary>
         /// Event raised when an MTConnect Device has been found
@@ -55,6 +60,13 @@ namespace TrakHound.MTConnectSniffer
         {
             Timeout = 500;
 
+            // Initialize Ranges
+            InitializePortRange();
+            AddressRange = GetHostAddresses();
+        }
+
+        private void InitializePortRange()
+        {
             int start = 5000;
             var size = 20;
             var portRange = new int[size];
@@ -70,7 +82,7 @@ namespace TrakHound.MTConnectSniffer
             stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var hosts = GetHostAddresses();
+            var hosts = AddressRange;
             foreach (var host in hosts)
             {
                 SendPingRequests(host);
@@ -109,7 +121,7 @@ namespace TrakHound.MTConnectSniffer
                     {
                         foreach (var ip in ni.GetIPProperties().UnicastAddresses)
                         {
-                            if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
                                 addresses.Add(ip.Address);
                             }

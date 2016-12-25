@@ -1,5 +1,5 @@
 ![MTConnect Sniffer](mtc-sniffer-logo-50px.png)
-<br><br>
+<br><br><br>
 .NET library for finding MTConnect® Devices on a network.
 
 # How It Works

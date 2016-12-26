@@ -62,7 +62,7 @@ namespace TrakHound.MTConnectSniffer
 
             // Initialize Ranges
             InitializePortRange();
-            AddressRange = GetHostAddresses();
+            AddressRange = GetDefaultAddresses();
         }
 
         private void InitializePortRange()
@@ -82,10 +82,10 @@ namespace TrakHound.MTConnectSniffer
             stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var hosts = AddressRange;
-            foreach (var host in hosts)
+            var addresses = AddressRange;
+            foreach (var address in addresses)
             {
-                SendPingRequests(host);
+                SendPingRequest(address);
             }
         }
 
@@ -135,6 +135,30 @@ namespace TrakHound.MTConnectSniffer
             return null;
         }
 
+        private IPAddress[] GetDefaultAddresses()
+        {
+            var l = new List<IPAddress>();
+
+            var hosts = GetHostAddresses();
+            if (hosts != null)
+            {
+                foreach (var host in hosts)
+                {
+                    IPNetwork ip;
+                    if (IPNetwork.TryParse(host.ToString(), out ip))
+                    {
+                        var addresses = IPNetwork.ListIPAddress(ip);
+                        if (addresses != null)
+                        {
+                            foreach (var address in addresses) l.Add(address);
+                        }
+                    }
+                }
+            }
+
+            return l.ToArray();
+        }
+
         private bool TestPort(IPAddress address, int port)
         {
             try
@@ -161,23 +185,12 @@ namespace TrakHound.MTConnectSniffer
 
         #region "Ping"
 
-        private void SendPingRequests(IPAddress host)
+        private void SendPingRequest(IPAddress address)
         {
-            IPNetwork ip;
-            if (IPNetwork.TryParse(host.ToString(), out ip))
-            {
-                var addresses = IPNetwork.ListIPAddress(ip);
-                if (addresses != null)
-                {
-                    foreach (var address in addresses)
-                    {
-                        var p = new Ping();
-                        p.PingCompleted += PingCompleted;
-                        sentPingRequests++;
-                        p.SendAsync(address, address);
-                    }
-                }
-            }
+            var p = new Ping();
+            p.PingCompleted += PingCompleted;
+            sentPingRequests++;
+            p.SendAsync(address, address);
         }
 
         private void PingCompleted(object sender, PingCompletedEventArgs e)
